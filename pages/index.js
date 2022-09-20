@@ -1,10 +1,14 @@
 import { Box, Button, Container, FormControl, TextField } from '@mui/material';
 import Head from 'next/head';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 function HomePage() {
-  const emailInputRef = useRef(null);
-  const feedbackInputRef = useRef(null);
+  const emailInputRef = useRef();
+  const feedbackInputRef = useRef();
+
+  useEffect(() => {
+    console.log(emailInputRef.current);
+  }, [emailInputRef]);
 
   function submitFormHandler(event) {
     event.preventDefault();
@@ -13,7 +17,6 @@ function HomePage() {
     const enteredFeedback = feedbackInputRef.current.value;
 
     const reqBody = { email: enteredEmail, text: enteredFeedback };
-    console.log('reqBody: ' + reqBody);
 
     fetch('/api/feedback', {
       method: 'POST',
@@ -38,9 +41,9 @@ function HomePage() {
               sx={{ mb: 2 }}
               id='my-email'
               label='Email'
-              required={true}
+              required
               variant='outlined'
-              ref={emailInputRef}
+              inputRef={emailInputRef}
             />
             <TextField
               sx={{ mb: 2 }}
@@ -49,8 +52,9 @@ function HomePage() {
               multiline
               rows={4}
               variant='standard'
-              ref={feedbackInputRef}
+              inputRef={feedbackInputRef}
             />
+
             <Button variant='standard' type='submit'>
               Send feedback
             </Button>
