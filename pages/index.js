@@ -1,18 +1,13 @@
 import { Box, Button, Container, FormControl, TextField } from '@mui/material';
 import Head from 'next/head';
 import { useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
 
 function HomePage() {
   const emailInputRef = useRef();
   const feedbackInputRef = useRef();
 
-  useEffect(() => {
-    console.log(emailInputRef.current);
-  }, [emailInputRef]);
-
-  function submitFormHandler(event) {
-    event.preventDefault();
-
+  const submitFormHandler = (data) => {
     const enteredEmail = emailInputRef.current.value;
     const enteredFeedback = feedbackInputRef.current.value;
 
@@ -23,7 +18,14 @@ function HomePage() {
       body: JSON.stringify(reqBody),
       headers: { 'Content-Type': 'application/json' },
     }).then((response) => response.json().then((data) => console.log(data)));
-  }
+  };
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isValid },
+  } = useForm();
 
   return (
     <div>
@@ -35,10 +37,11 @@ function HomePage() {
         <Box>
           <h1>The Home Page</h1>
         </Box>
-        <form onSubmit={submitFormHandler}>
+        <form onSubmit={handleSubmit(submitFormHandler)}>
           <FormControl>
             <TextField
               sx={{ mb: 2 }}
+              {...register('email', { required: true })}
               id='my-email'
               label='Email'
               required
@@ -47,6 +50,7 @@ function HomePage() {
             />
             <TextField
               sx={{ mb: 2 }}
+              {...register('feedback', { required: true })}
               id='my-feedback'
               label='Your feedback'
               multiline
