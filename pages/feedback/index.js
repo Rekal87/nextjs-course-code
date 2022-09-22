@@ -17,7 +17,7 @@ function FeedbackPage(props) {
     fetch(`/api/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        setFeedbackData(data.setfeedback);
+        setFeedbackData(data.feedback);
       });
   }
 
@@ -36,7 +36,7 @@ function FeedbackPage(props) {
             </List>
           ))}
         </Box>
-        <Box>
+        <Box p={4} sx={{ backgroundColor: '#fff' }}>
           {feedbackData && <Typography>{feedbackData.email}</Typography>}
         </Box>
       </Container>
