@@ -11,12 +11,14 @@ import { Fragment, useState } from 'react';
 import { buildFeedbackPath, extractFeedback } from '../api/feedback';
 
 function FeedbackPage(props) {
-  const [feedbackData, setFeedbackData] = useState();
+  const [feedbackData, setFeedbackData] = useState([]);
 
   function showDetails(id) {
-    fetch(`/api/${id}`).then((response) =>
-      response.json(() => setFeedbackData(data.feedback))
-    );
+    fetch(`/api/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setFeedbackData(data.setfeedback);
+      });
   }
 
   return (
