@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
   List,
   ListItem,
   ListItemIcon,
@@ -21,12 +20,6 @@ function HomePage() {
 
   const [feedbackItems, setFeedbackItems] = useState([]);
 
-  /**
-   *
-   * @param {*} data
-   * @example
-   * const test = "hei"
-   */
   const submitFormHandler = (data) => {
     const enteredEmail = emailInputRef.current.value;
     const enteredFeedback = feedbackInputRef.current.value;
